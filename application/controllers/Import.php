@@ -173,8 +173,14 @@ class Import extends CI_Controller {
 			}
 		}
 
-		$d = date("Y-m-d");
-		$details = $this->db->query("SELECT filename,number_of_records,import_date FROM imported_files WHERE date(import_date)='$d'");
+		if($_POST['data_od'] && $_POST['data_do']){
+			$data_od = $_POST['data_od'];
+			$data_do = $_POST['data_do'];
+		}else{
+			$data_od = date("Y-m-d");
+			$data_do = date("Y-m-d");
+		}
+		$details = $this->db->query("SELECT filename,number_of_records,import_date FROM imported_files WHERE date(import_date) BETWEEN '$data_od' AND '$data_do'");
 		$check_exist = $details->num_rows();
 		if($check_exist > 0)
 		{
