@@ -17,12 +17,12 @@
 -->
 <html lang="pl" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="icon" type="image/png" href="images/DB_16?16.png">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Material Dashboard Lite</title>
+    <title><?php echo $title?></title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -33,9 +33,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Material Design Lite">
 
-
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="../assets/images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileImage" content="<?php echo base_url();?>assets/images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
@@ -47,19 +46,20 @@
           type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- inject:css -->
-    <link rel="stylesheet" href="../assets/css/lib/getmdl-select.min.css">
-    <link rel="stylesheet" href="../assets/css/lib/nv.d3.css">
-    <link rel="stylesheet" href="../assets/css/application.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/lib/getmdl-select.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/lib/nv.d3.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/application.css">
     <!-- endinject -->
 
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
     <header class="mdl-layout__header">
+        
         <div class="mdl-layout__header-row">
-		<!--begin test menu-->
+        <div class="mdl-layout-spacer"></div>
+		    <!--begin test menu-->
             <div style="cursor:pointer" id="more1">test</div>
-
             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp settings-dropdown"
                 for="more1">
                 <li class="mdl-menu__item">
@@ -71,8 +71,12 @@
                 <li class="mdl-menu__item">
                     test3
                 </li>
-            </ul>
-			<!--end test menu-->
+            </ul><div class="mdl-layout-spacer"></div>
+            <div style="cursor:pointer" id="more1">test</div><div class="mdl-layout-spacer"></div>
+            <div style="cursor:pointer" id="more1">test</div><div class="mdl-layout-spacer"></div>
+            <div style="cursor:pointer" id="more1">test</div><div class="mdl-layout-spacer"></div>
+            <!--end test menu-->
+            
 			<div class="mdl-layout-spacer"></div>
             <!-- Search-->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
@@ -276,6 +280,7 @@
                 </li>
             </ul>
         </div>
+        
     </header>
 	
 	<div class="mdl-layout__drawer">

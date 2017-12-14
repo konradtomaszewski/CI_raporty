@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Import extends CI_Controller {
@@ -12,6 +13,7 @@ class Import extends CI_Controller {
 
 	public function index()
 	{
+		
 		$data['title'] = "Zarządzenie danymi";
 		$this->load->view("template/header", $data);
 		$this->load->view("import_view", $data);
@@ -132,7 +134,8 @@ class Import extends CI_Controller {
 		}
 	}
 
-	public function import_result(){
+	public function import_result()
+	{
 		$query = $this->db->query("SELECT date(data) as 'data', count(id) as 'ilosc' FROM interwencje WHERE date(data) IN (SELECT date(data) FROM interwencje group by date(data)) GROUP BY date(data)");
 			foreach($query->result() as $row)
 			{
@@ -142,7 +145,8 @@ class Import extends CI_Controller {
 			}
 	}
 
-	public function import_result_details(){
+	public function import_result_details()
+	{
 		$query = $this->db->query("SELECT filename,miasto FROM imported_files WHERE number_of_records='0'");
 		$check_exist = $query->num_rows();
 		if($check_exist > 0)
@@ -171,28 +175,50 @@ class Import extends CI_Controller {
 
 		$d = date("Y-m-d");
 		$details = $this->db->query("SELECT filename,number_of_records,import_date FROM imported_files WHERE date(import_date)='$d'");
-
-		$result = array();
-		foreach($details->result() as $row)
+		$check_exist = $details->num_rows();
+		if($check_exist > 0)
 		{
-			$temp = array();
-			$temp['import_date'] = $row->import_date;
-			$temp['filename'] = $row->filename;
-			$temp['number_of_records'] = $row->number_of_records;
-
-			$result[] = $temp;
+			$result = array();
+			foreach($details->result() as $row)
+			{
+				$temp = array();
+				$temp['import_date'] = $row->import_date;
+				$temp['filename'] = $row->filename;
+				$temp['number_of_records'] = $row->number_of_records;
+				$result[] = $temp;
+			}
+			//echo json_encode($result);
+			echo '<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp projects-table">
+			<thead>
+			<tr>
+				<th class="mdl-data-table__cell--non-numeric">Data importu</th>
+				<th class="mdl-data-table__cell--non-numeric">Zaimportowany pliki</th>
+				<th class="mdl-data-table__cell--non-numeric">Ilość rekordów</th>
+			</tr>
+			</thead>
+			<tbody>';			
+			
+			foreach($details->result() as $row)
+			{
+				echo "<tr>";	
+				echo "<td class='mdl-data-table__cell--non-numeric'>".$row->import_date."</td>";
+				echo "<td class='mdl-data-table__cell--non-numeric'>".$row->filename."</td>";
+				echo "<td class='mdl-data-table__cell--non-numeric'>".$row->number_of_records."</td>";
+				echo "</tr>";
+			}
+			echo '</tbody></table>';
 		}
-
-		echo json_encode($result);
-		
-		/*foreach($details->result() as $row)
+		else
 		{
-			echo "<tr>";	
-			echo "<td class='mdl-data-table__cell--non-numeric'>".$row->import_date."</td>";
-			echo "<td class='mdl-data-table__cell--non-numeric'>".$row->filename."</td>";
-			echo "<td class='mdl-data-table__cell--non-numeric'>".$row->number_of_records."</td>";
-			echo "</tr>";
-		}*/
-		
+			 echo '<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp projects-table">
+				<thead>
+				<tr>
+					<th class="mdl-data-table__cell--non-numeric">Data importu</th>
+					<th class="mdl-data-table__cell--non-numeric">Zaimportowany pliki</th>
+					<th class="mdl-data-table__cell--non-numeric">Ilość rekordów</th>
+				</tr>
+				</thead>
+				<tbody><tr><td class="mdl-data-table__cell--non-numeric" colspan="3"><div style="text-align:center; font-weight:bold">Niczego nie zaimportowano</div></td></tr></tbody></table>';	
+		}
 	}
 }

@@ -1,22 +1,41 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	imported_files();
+    $('button#run_import').click(function(){
+        jQuery.ajax({
+                    type: "GET",
+                    url: "<?php echo base_url();?>import/run_import",
+                    success: function(res) {
+                        console.log('Zakończono import danych');
+                    }
+        });
+    });
+
+    function imported_files(){
+        jQuery.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url();?>import/import_result_details",
+                    success: function(result) {
+                        $('div#imported_files').html(result);
+                    }
+        });
+    };
+
+    $(function(){
+        setInterval(imported_files,3000);
+    });
+
+});
+</script>
+
 <main class="mdl-layout__content">
 
         <div class="mdl-grid mdl-grid--no-spacing">
-
+           
             <div class="mdl-grid mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
-                <!-- Table-->
                 <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone ">
-                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp projects-table">
-                        <thead>
-                        <tr>
-                            <th class="mdl-data-table__cell--non-numeric">Data importu</th>
-                            <th class="mdl-data-table__cell--non-numeric">Zaimportowany pliki</th>
-                            <th class="mdl-data-table__cell--non-numeric">Ilość rekordów</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-							<div id="result"></div>
-                        </tbody>
-                    </table>
+                     <div id="imported_files"></div>
                 </div>
             </div>
 
@@ -32,7 +51,11 @@
                             <div>
                                Naciśnięcie przycisku spowoduje uruchomienie procesu odpwoedzialnego za import danych z katalogu files/xml do bazy danych
                             </div>
-                            <button id="run_import">Uruchom proces importu</button>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <button id="run_import" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue">
+                                Uruchom proces importu
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -61,36 +84,4 @@
         </div>
 
     </main>
-<title><?php echo $title ?></title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	imported_files();
-    $('button#run_import').click(function(){
-        jQuery.ajax({
-                    type: "GET",
-                    url: "import/run_import",
-                    success: function(res) {
-                        console.log('Zakończono import danych');
-                    }
-        });
-    });
 
-    function imported_files(){
-        jQuery.ajax({
-                    type: "POST",
-                    url: "import/import_result_details",
-                    dataType: 'json',
-                    success: function(result) {
-                        var x = JSON.stringify(result);
-						console.log(x);
-                    }
-        });
-    };
-
-    $(function(){
-        setInterval(imported_files,3000);
-    });
-
-});
-</script>
