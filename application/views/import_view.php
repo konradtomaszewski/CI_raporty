@@ -53,7 +53,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <div class="mdl-card__actions">
-                            <button id="run_import" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue">
+                            <button id="run_import" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue" style="float:right">
                                 Uruchom proces importu
                             </button>
                         </div>
@@ -61,19 +61,18 @@ $(document).ready(function() {
                 </div>
 				<!-- ToDo_widget-->
                 <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone">
-                    <div class="mdl-card mdl-shadow--2dp todo">
+                    <div class="mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text">To-do list</h2>
+                            <h2 class="mdl-card__title-text">Wyświetl dane archiwalne</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-                            <ul class="mdl-list">
-
-                            </ul>
+                            <div>
+                            asd
+                            </div>
                         </div>
                         <div class="mdl-card__actions">
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect">remove selected</button>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-shadow--8dp mdl-button--colored ">
-                                <i class="material-icons mdl-js-ripple-effect">add</i>
+                            <button id="show_archive" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue" style="float:right">
+                                Pokaż dane
                             </button>
                         </div>
                     </div>

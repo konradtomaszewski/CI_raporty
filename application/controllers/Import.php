@@ -187,7 +187,6 @@ class Import extends CI_Controller {
 				$temp['number_of_records'] = $row->number_of_records;
 				$result[] = $temp;
 			}
-			//echo json_encode($result);
 			echo '<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp projects-table">
 			<thead>
 			<tr>
