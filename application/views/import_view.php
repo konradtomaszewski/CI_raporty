@@ -2,6 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	imported_files();
+    
     $('button#run_import').click(function(){
         jQuery.ajax({
                     type: "GET",
@@ -68,12 +69,12 @@ $(document).ready(function() {
                         <p>Dane zostaną automatycznie załadowane po wprowadzeniu zakresu dat</p>
                         <div class="mdl-grid"><table>
                             <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="data_od" value=""/>
-                                <label class="mdl-textfield__label" style="color:#aaa" for="data_od">Data początkowa</label>
+                                <input class="mdl-textfield__input" type="text" id="data_od" value="<?php echo date("Y-m-d")?>"/>
+                                <label class="mdl-textfield__label" for="data_od">Data początkowa</label>
                             </div></td>
                             <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="data_do" value=""/>
-                                <label class="mdl-textfield__label" style="color:#aaa" for="data_do">Data końcowa</label>
+                                <input class="mdl-textfield__input" type="text" id="data_do" value="<?php echo date("Y-m-d")?>"/>
+                                <label class="mdl-textfield__label" for="data_do">Data końcowa</label>
                             </div></td>
                             <!--<input type="text" id="data_od" placeholder="od"/>
                             <input type="text" id="data_do" placeholder="do"/>-->
