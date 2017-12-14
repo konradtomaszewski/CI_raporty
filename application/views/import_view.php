@@ -43,7 +43,7 @@ $(document).ready(function() {
 			
                 <!-- Robot card-->
 				<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone">
-                    <div class="mdl-card mdl-shadow--2dp robot1">
+                    <div class="mdl-card mdl-shadow--2dp excel_to_db">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Import danych</h2>
                         </div>

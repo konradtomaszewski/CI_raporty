@@ -192,7 +192,7 @@ class Import extends CI_Controller {
 			<thead>
 			<tr>
 				<th class="mdl-data-table__cell--non-numeric">Data importu</th>
-				<th class="mdl-data-table__cell--non-numeric">Zaimportowany pliki</th>
+				<th class="mdl-data-table__cell--non-numeric">Zaimportowane pliki</th>
 				<th class="mdl-data-table__cell--non-numeric">Ilość rekordów</th>
 			</tr>
 			</thead>
