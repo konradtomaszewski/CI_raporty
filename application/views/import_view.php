@@ -16,7 +16,7 @@ $(document).ready(function() {
     function imported_files(){
         var data_od = $('input#data_od').val();
         var data_do = $('input#data_do').val();
-        console.log(data_od);
+
         jQuery.ajax({
                     type: "POST",
                     url: "<?php echo base_url();?>import/import_result_details",
