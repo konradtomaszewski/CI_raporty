@@ -160,7 +160,7 @@ class Import extends CI_Controller {
 				$mob = substr($miasto,-3);
 				if($mob == 'mob')
 				{
-
+					$data = substr($d[2],0,-4);
 				}else{
 					$data = substr($d[2],0,-4);
 				}
