@@ -2,6 +2,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	imported_files();
+    if(screen.height>768){
+        $('div#sidebar').css("position", "fixed");
+        $('div#sidebar').css("margin-right","2%;");
+    }
     
     $('button#run_import').click(function(){
         jQuery.ajax({
@@ -45,7 +49,7 @@ $(document).ready(function() {
             </div>
 
             <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone ">
-                <div style="position:fixed; margin-right:2%;">
+                <div id="sidebar">
                     <div class="mdl-card mdl-shadow--2dp excel_to_db">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Import danych</h2>
