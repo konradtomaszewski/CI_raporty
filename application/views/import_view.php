@@ -4,7 +4,7 @@ $(document).ready(function() {
 	imported_files();
     if(screen.height>768){
         $('div#sidebar').css("position", "fixed");
-        $('div#sidebar').css("margin-right","2%;");
+        $('div#sidebar').css("margin-right","2%");
     }
     
     $('button#run_import').click(function(){
