@@ -4,7 +4,7 @@ $(document).ready(function() {
 	imported_files();
     if(screen.height>768){
         $('div#sidebar').css("position", "fixed");
-        $('div#sidebar').css("margin-right","2%");
+        //$('div#sidebar').css("margin-right","2%");
     }
     
     $('button#run_import').click(function(){
@@ -42,13 +42,13 @@ $(document).ready(function() {
 </script>
 
 <main class="mdl-layout__content">
-    <div class="mdl-grid mdl-grid--no-spacing">
-        <div class="mdl-grid mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--6-col-phone mdl-cell--top">
-            <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone ">
+    <div class="mdl-grid mdl-grid--no-spacing" style="zoom:0.9">
+        <div class="mdl-grid mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--8-col-phone mdl-cell--top">
+            <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
                     <div id="imported_files" ></div>
             </div>
 
-            <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone ">
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--4-col-phone ">
                 <div id="sidebar">
                     <div class="mdl-card mdl-shadow--2dp excel_to_db">
                         <div class="mdl-card__title mdl-card--expand">

@@ -3,12 +3,14 @@ header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Import extends CI_Controller {
-	public $path_dir = null;
+	public $path_dir = './files/xml/';
 	public $excel_file = null;
 
 	public function __construct()
 	{
 		parent::__construct();
+		ini_set('max_execution_time', 0); 
+		ini_set('memory_limit','2048M');
 	}
 
 	public function index()
@@ -22,7 +24,6 @@ class Import extends CI_Controller {
 
 	public function run_import()
 	{
-		$this->path_dir = './files/xml/';
 		//usun tabulator z pierwszej linii
 		if ($handle = opendir($this->path_dir)) {
 			while (false !== ($this->excel_file = readdir($handle))) {
@@ -196,9 +197,9 @@ class Import extends CI_Controller {
 			echo '<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp projects-table">
 			<thead>
 			<tr>
-				<th class="mdl-data-table__cell--non-numeric">Data importu</th>
+				<th class="mdl-data-table__cell--non-numeric">Data wykonania importu</th>
 				<th class="mdl-data-table__cell--non-numeric">Zaimportowane pliki</th>
-				<th class="mdl-data-table__cell--non-numeric">Ilość rekordów</th>
+				<th class="mdl-data-table__cell--non-numeric">Ilość rekordów w pliku</th>
 			</tr>
 			</thead>
 			<tbody>';			
