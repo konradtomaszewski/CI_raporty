@@ -1,23 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Raport extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -33,15 +19,33 @@ class Raport extends CI_Controller {
 	public function ilosciowy()
 	{
 		echo "Tutaj wyświetli się raport ilościowy";
+	}
 
+	public function ilosciowy_json()
+	{
+		$query = $this->db->query("SELECT * FROM raport");
+		$arr = array();
+		foreach($query->result() as $row)
+		{
+			$temp = array();
+			$temp['data']=$row->data;
+			$temp['miasto']=$row->miasto;
+			$temp['serwisant']=$row->serwisant;
+			$temp['usterka']=$row->usterka;
+			$temp['emtest']=$row->emtest;
+			$temp['sb']=$row->sb;
+			$temp['mera']=$row->mera;
+			$temp['mobilne']=$row->mobilne;
+			$arr[] = $temp;
+		}
+		echo json_encode($arr);
 	}
 
 	public function ilosciowy_generate()
 	{
+		$this->db->query("TRUNCATE raport");
+
 		$query = $this->db->query("SELECT * FROM interwencje");
-		//$result = db->query($query);
-
-
 		foreach($query->result() as $row)
 		{
 			//print_r($row);
