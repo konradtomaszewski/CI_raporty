@@ -4,7 +4,7 @@ $(document).ready(function() {
 	imported_files();
     if(screen.height>768){
         $('div#sidebar').css("position", "fixed");
-        //$('div#sidebar').css("margin-right","2%");
+        $('div#sidebar').css("margin-right","2%");
     }
     
     $('button#run_import').click(function(){
@@ -44,7 +44,7 @@ $(document).ready(function() {
 <main class="mdl-layout__content">
     <div class="mdl-grid mdl-grid--no-spacing" style="zoom:0.9">
         <div class="mdl-grid mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--8-col-phone mdl-cell--top">
-            <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
+            <div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
                     <div id="imported_files" ></div>
             </div>
 
