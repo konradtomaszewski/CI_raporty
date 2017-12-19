@@ -24,6 +24,7 @@ class Import extends CI_Controller {
 
 	public function run_import()
 	{
+		require('Raport.php');
 		//usun tabulator z pierwszej linii
 		if ($handle = opendir($this->path_dir)) {
 			while (false !== ($this->excel_file = readdir($handle))) {
@@ -77,6 +78,8 @@ class Import extends CI_Controller {
 				}
 			}
 			closedir($handle);
+			$raport = new Raport();
+			$raport->ilosciowy_generate();
 		}	
 	}
 
@@ -111,6 +114,8 @@ class Import extends CI_Controller {
 				}
 				$first_row = false;
 			}
+
+
 		}
 	}
 

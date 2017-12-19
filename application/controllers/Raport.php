@@ -18,12 +18,22 @@ class Raport extends CI_Controller {
 
 	public function ilosciowy()
 	{
-		echo "Tutaj wyświetli się raport ilościowy";
+		$data['title'] = 'Raport ilościowy live';
+		$this->load->view("template/header", $data);
+		$this->load->view("ilosciowy_view", $data);
+		$this->load->view("template/footer");
 	}
 
 	public function ilosciowy_json()
 	{
-		$query = $this->db->query("SELECT * FROM raport");
+		if(isset($_GET['data_od']) && isset($_GET['data_do'])){
+			$data_od = $_GET['data_od'];
+			$data_do = $_GET['data_do'];
+		}else{
+			$data_od = date("Y-m-d");
+			$data_do = date("Y-m-d");
+		}
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, emtest, sb, mera, mobilne FROM raport WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
 		$arr = array();
 		foreach($query->result() as $row)
 		{
@@ -92,5 +102,45 @@ class Raport extends CI_Controller {
 					$this->db->query("INSERT INTO raport SET data='$data', miasto='Gdańsk', serwisant='$serwisant', usterka='$usterka', emtest='1'");
 			}
 		}
+	}
+
+	public function ilosciowy_test()
+	{
+		if(isset($_GET['data_od']) && isset($_GET['data_do'])){
+			$data_od = $_GET['data_od'];
+			$data_do = $_GET['data_do'];
+		}else{
+			//$data_od = date("Y-m-d");
+			$data_od = '2017-12-18';
+			$data_do = date("Y-m-d");
+		}
+		$query = $this->db->query("SELECT * FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		$raport = array();
+		foreach($query->result() as $row)
+		{
+			$temp = array();
+			if($row->miasto == "WKM")
+			{
+				if($row->nra < 100)
+				{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Warszawa';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['emtest'] = '1';
+					$raport[] = $temp;
+				}
+				else
+				{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Warszawa';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['sb'] = '1';
+					$raport[] = $temp;
+				}
+			}
+		}
+		echo json_encode($raport);
 	}
 }
