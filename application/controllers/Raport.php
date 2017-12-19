@@ -24,7 +24,7 @@ class Raport extends CI_Controller {
 		$this->load->view("template/footer");
 	}
 
-	public function ilosciowy_json()
+	public function ilosciowy_json_old()
 	{
 		if(isset($_GET['data_od']) && isset($_GET['data_do'])){
 			$data_od = $_GET['data_od'];
@@ -104,17 +104,18 @@ class Raport extends CI_Controller {
 		}
 	}
 
-	public function ilosciowy_test()
+	public function ilosciowy_json()
 	{
 		if(isset($_GET['data_od']) && isset($_GET['data_do'])){
 			$data_od = $_GET['data_od'];
 			$data_do = $_GET['data_do'];
 		}else{
 			//$data_od = date("Y-m-d");
-			$data_od = '2017-12-18';
+			$data_od = '2017-12-01';
 			$data_do = date("Y-m-d");
 		}
-		$query = $this->db->query("SELECT * FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		
 		$raport = array();
 		foreach($query->result() as $row)
 		{
@@ -139,6 +140,42 @@ class Raport extends CI_Controller {
 					$temp['sb'] = '1';
 					$raport[] = $temp;
 				}
+			}
+			elseif($row->miasto == "WrKM")
+			{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Wrocław';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['sb'] = '1';
+					$raport[] = $temp;
+			}
+			elseif($row->miasto == "WrKMmob")
+			{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Wrocław';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['mobilne'] = '1';
+					$raport[] = $temp;
+			}
+			elseif($row->miasto == "BKM")
+			{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Bydgoszcz';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['sb'] = '1';
+					$raport[] = $temp;
+			}
+			elseif($row->miasto == "GDANSK")
+			{
+					$temp['data'] = $row->data;
+					$temp['miasto'] = 'Gdańsk';
+					$temp['serwisant'] = $row->serwisant;
+					$temp['usterka'] = $row->usterka;
+					$temp['emtest'] = '1';
+					$raport[] = $temp;
 			}
 		}
 		echo json_encode($raport);

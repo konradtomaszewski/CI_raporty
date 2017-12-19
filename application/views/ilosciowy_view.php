@@ -11,12 +11,15 @@
 .pvtUi{
 	margin-top:10px;
 	margin-left:5px;
-	border: 0px !important;
+	border: 1px solid #666 !important;
     border-collapse: collapse;
+	margin-bottom:20px;
 }
 .pvtRendererArea, .pvtTable{
 	border: 0px !important;
     border-collapse: collapse;
+	height:100%;
+	width:100%;
 }
 .pvtRenderer{
 	height:100%;
@@ -25,7 +28,7 @@
 .pvtAxisContainer, .pvtRows, .pvtVals, .ui-sortable{
 	//background:transparent;
 	background:#444;
-	border:0px;
+	border: 1px solid #666 !important;
 }
 .pvtVals{
 	width:100px !important;
@@ -61,7 +64,7 @@
 					rows: ["data"], 
 					cols: ["miasto"],
 					aggregators: {
-						"Count":      function() { return tpl.count()() }
+						"Count": function(){ return tpl.count()()}
 					}
 				});
 			});
@@ -80,10 +83,10 @@
 			<div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
 					<div class="mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text">Raport ilościowy</h2>
+                            <h2 class="mdl-card__title-text">Dynamiczny Raport ilościowy</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-							<div id="output" style="overflow:scroll; background:#333; height:600px"></div>
+							<div id="output" style="overflow-x:auto; overflow-y:hidden; background:#; height:auto"></div>
                         </div>
 						<div class="mdl-card__actions">
 							<p>&nbsp;</p>
