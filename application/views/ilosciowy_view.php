@@ -105,7 +105,7 @@
                             <div class="mdl-grid">
 								<table>
 									<td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="text" id="data_od" value="<?php echo date("Y-m-d")?>"/>
+										<input class="mdl-textfield__input" type="text" id="data_od" value="<?php echo date("Y-m-d", strtotime("-1 day"))?>"/>
 										<label class="mdl-textfield__label" for="data_od">Data początkowa</label>
 									</div></td>
 									<td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
