@@ -3,36 +3,37 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
+<!--pivot.js-->
 <link rel="stylesheet" type="text/css" href="https://pivottable.js.org/dist/pivot.css">
 <script type="text/javascript" src="https://pivottable.js.org/dist/pivot.js"></script>
 <script type="text/javascript" src="https://pivottable.js.org/dist/d3_renderers.js"></script>
 <style>
-.pvtUi{
-	margin-top:10px;
-	margin-left:5px;
-	border: 1px solid #666 !important;
-    border-collapse: collapse;
-	margin-bottom:20px;
-}
-.pvtRendererArea, .pvtTable{
-	border: 0px !important;
-    border-collapse: collapse;
-	height:100%;
-	width:100%;
-}
-.pvtRenderer{
-	height:100%;
-	width:100%;
-}
-.pvtAxisContainer, .pvtRows, .pvtVals, .ui-sortable{
-	//background:transparent;
-	background:#444;
-	border: 1px solid #666 !important;
-}
-.pvtVals{
-	width:100px !important;
-}
+	.pvtUi{
+		margin-top:10px;
+		margin-left:5px;
+		border: 1px solid #666 !important;
+		border-collapse: collapse;
+		margin-bottom:20px;
+		padding: 20px 20px 20px 20px;
+	}
+	.pvtRendererArea, .pvtTable{
+		border: 0px !important;
+		border-collapse: collapse;
+		height:100%;
+		width:100%;
+	}
+	.pvtRenderer{
+		height:100%;
+		width:100%;
+	}
+	.pvtAxisContainer, .pvtRows, .pvtVals, .ui-sortable{
+		//background:transparent;
+		background:#444;
+		border: 1px solid #666 !important;
+	}
+	.pvtVals{
+		width:100px !important;
+	}
 </style>
 <script>
     $(function(){
@@ -40,23 +41,6 @@
 			var data_od = $("#data_od").val();
 			var data_do = $("#data_do").val();
 
-			/*jQuery.ajax({
-                    type: "GET",
-                    url: "<?php echo base_url();?>raport/ilosciowy_generate?data_od"+data_od+"&data_do="+data_do,
-                    success: function(res) {
-						var tpl = $.pivotUtilities.aggregatorTemplates;
-						$.getJSON("<?php echo base_url();?>raport/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
-							$("#output").pivotUI(mps, {
-								rows: ["data"], 
-								cols: ["miasto"],
-								aggregators: {
-									"Count":      function() { return tpl.count()() }
-								}
-							});
-						});
-						console.log("pobrano dane");
-                    }
-      		});*/
 			var tpl = $.pivotUtilities.aggregatorTemplates;
 			
 			$.getJSON("<?php echo base_url();?>raport/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
@@ -64,17 +48,23 @@
 					rows: ["data"], 
 					cols: ["miasto"],
 					aggregators: {
-						"Count": function(){ return tpl.count()()}
+						"Ilość": function(){ return tpl.count()()}
 					}
 				});
 			});
 			console.log("pobrano dane");
-			
-		})
+		});
+		$("#export").click(function(){
+			var data_od = $("#data_od").val();
+			var data_do = $("#data_do").val();
+
+			var url = "<?php echo base_url();?>raport/ilosciowy_export?data_od="+data_od+"&data_do="+data_do;
+			window.open(url, '_blank');
 		
+			console.log("pobrano dane");
+		})
     });
 </script>
-
 
 <main class="mdl-layout__content">
     <div class="mdl-grid mdl-grid--no-spacing" >
@@ -86,7 +76,9 @@
                             <h2 class="mdl-card__title-text">Dynamiczny Raport ilościowy</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-							<div id="output" style="overflow-x:auto; overflow-y:hidden; background:#; height:auto"></div>
+							<div id="output" style="overflow-x:auto; overflow-y:hidden; background:#; height:auto; min-height: 410px;">
+								<p style="text-align:center; font-size:14pt">Wprowadź datę początkową i końcową, następnie kliknij przycisk "Pobierz dane" aby móc operować na rekordach</p>
+							</div>
                         </div>
 						<div class="mdl-card__actions">
 							<p>&nbsp;</p>
@@ -116,13 +108,13 @@
 							</div>
                         </div>
 						<div class="mdl-card__actions">
-						<button id="run_ilosciowy" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue" style="float:right">
-							Pobierz dane
-						</button>
+							<button id="export" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue">Exportuj</button>
+							<button id="run_ilosciowy" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue" style="float:right">Pobierz dane</button>
 						</div>
                     </div>
                 </div>    
             </div>
+			
         </div>
     </div>
 </main>
