@@ -110,7 +110,7 @@ class Raport extends CI_Controller {
 			$data_od = $_GET['data_od'];
 			$data_do = $_GET['data_do'];
 		}else{
-			$data_od = date("Y-m-d", strtotime("-1 day"));
+			$data_od = date("Y-m-d", strtotime("- day"));
 			$data_do = date("Y-m-d");
 		}
 		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
@@ -128,6 +128,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['emtest'] = '1';
+					$temp['automat'] = 'EMTest';
 					$raport[] = $temp;
 				}
 				else
@@ -137,6 +138,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['sb'] = '1';
+					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
 				}
 			}
@@ -149,6 +151,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['sb'] = '1';
+					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
 				}
 				else{
@@ -157,6 +160,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['mera'] = '1';
+					$temp['automat'] = 'Mera';
 					$raport[] = $temp;
 				}	
 			}
@@ -167,6 +171,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['mobilne'] = '1';
+					$temp['automat'] = 'Mobilne';
 					$raport[] = $temp;
 			}
 			elseif($row->miasto == "BKM")
@@ -176,6 +181,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['sb'] = '1';
+					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
 			}
 			elseif($row->miasto == "GDANSK")
@@ -185,6 +191,7 @@ class Raport extends CI_Controller {
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
 					$temp['emtest'] = '1';
+					$temp['automat'] = 'EMTest';
 					$raport[] = $temp;
 			}
 		}
