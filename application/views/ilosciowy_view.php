@@ -1,12 +1,13 @@
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<!--jQuery.js-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <!--pivot.js-->
 <link rel="stylesheet" type="text/css" href="https://pivottable.js.org/dist/pivot.css">
 <script type="text/javascript" src="https://pivottable.js.org/dist/pivot.js"></script>
-<script type="text/javascript" src="https://pivottable.js.org/dist/d3_renderers.js"></script>
+<!--plotly.js-->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="https://pivottable.js.org/dist/plotly_renderers.js"></script>
+
 <style>
 	.pvtUi{
 		margin-top:10px;
@@ -42,14 +43,19 @@
 			var data_do = $("#data_do").val();
 
 			var tpl = $.pivotUtilities.aggregatorTemplates;
+			var derivers = $.pivotUtilities.derivers;
+       		var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.plotly_renderers);
 			
 			$.getJSON("<?php echo base_url();?>raport/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
 				$("#output").pivotUI(mps, {
-					rows: ["data"], 
-					cols: ["miasto"],
+					renderers: renderers,
+					cols: ["data"], 
+					rows: ["miasto","automat"],
 					aggregators: {
 						"Ilość": function(){ return tpl.count()()}
-					}
+				    },
+					rendererName: "Table",
+               		rowOrder: "value_a_to_z", colOrder: "value_z_to_a",
 				});
 			});
 			console.log("pobrano dane");

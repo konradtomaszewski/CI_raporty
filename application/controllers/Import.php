@@ -24,6 +24,7 @@ class Import extends CI_Controller {
 
 	public function run_import()
 	{
+		$this->db->cache_off();
 		//usun tabulator z pierwszej linii
 		if ($handle = opendir($this->path_dir)) {
 			while (false !== ($this->excel_file = readdir($handle))) {
@@ -135,17 +136,6 @@ class Import extends CI_Controller {
 				$this->db->query("INSERT INTO interwencje (id, nra, data, serwisant, usterka, miasto) VALUES (NULL, '$nra_val', '$data', '$serwisant', '$usterka', '$miasto');");
 			}
 		}
-	}
-
-	public function import_result()
-	{
-		$query = $this->db->query("SELECT date(data) as 'data', count(id) as 'ilosc' FROM interwencje WHERE date(data) IN (SELECT date(data) FROM interwencje group by date(data)) GROUP BY date(data)");
-			foreach($query->result() as $row)
-			{
-					echo $row->data." ";
-					echo $row->ilosc;
-					echo "<br />";
-			}
 	}
 
 	public function import_result_details()
