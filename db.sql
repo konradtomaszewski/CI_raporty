@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Gru 2017, 15:01
--- Wersja serwera: 10.1.25-MariaDB
--- Wersja PHP: 5.6.31
+-- Czas generowania: 03 Sty 2018, 16:09
+-- Wersja serwera: 10.1.29-MariaDB
+-- Wersja PHP: 7.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -13,10 +13,27 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Baza danych: `interwencje`
+-- Baza danych: `mennica_raporty`
 --
-CREATE DATABASE IF NOT EXISTS `interwencje` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `interwencje`;
+CREATE DATABASE IF NOT EXISTS `mennica_raporty` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `mennica_raporty`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `cok`
+--
+
+CREATE TABLE `cok` (
+  `id` int(11) NOT NULL,
+  `agent_name` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `agent_login` time NOT NULL,
+  `agent_logout` time NOT NULL,
+  `all_call_count` int(11) NOT NULL,
+  `received_call_count` int(11) NOT NULL,
+  `missed_call_count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -29,7 +46,8 @@ CREATE TABLE `imported_files` (
   `miasto` varchar(10) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `number_of_records` int(11) NOT NULL,
-  `import_date` datetime NOT NULL
+  `import_date` datetime NOT NULL,
+  `filetype` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -47,26 +65,15 @@ CREATE TABLE `interwencje` (
   `miasto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Struktura tabeli dla tabeli `raport`
+-- Indeksy dla zrzutÃ³w tabel
 --
 
-CREATE TABLE `raport` (
-  `data` datetime NOT NULL,
-  `miasto` varchar(255) NOT NULL,
-  `serwisant` varchar(255) NOT NULL,
-  `usterka` varchar(255) NOT NULL,
-  `emtest` int(2) NOT NULL,
-  `sb` int(2) NOT NULL,
-  `mera` int(2) NOT NULL,
-  `mobilne` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
--- Indeksy dla zrzutów tabel
+-- Indexes for table `cok`
 --
+ALTER TABLE `cok`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `imported_files`
@@ -86,12 +93,20 @@ ALTER TABLE `interwencje`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `cok`
+--
+ALTER TABLE `cok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT dla tabeli `imported_files`
 --
 ALTER TABLE `imported_files`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT dla tabeli `interwencje`
 --
 ALTER TABLE `interwencje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
