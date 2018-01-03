@@ -2,8 +2,8 @@
 header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Import extends CI_Controller {
-	public $path_dir = './files/xml/';
+class Import_interwencje extends CI_Controller {
+	public $path_dir = './files/interwencje/';
 	public $excel_file = null;
 
 	public function __construct()
@@ -11,15 +11,6 @@ class Import extends CI_Controller {
 		parent::__construct();
 		ini_set('max_execution_time', 0); 
 		ini_set('memory_limit','2048M');
-	}
-
-	public function index()
-	{
-		
-		$data['title'] = "Zarządzenie danymi";
-		$this->load->view("template/header", $data);
-		$this->load->view("import_view", $data);
-		$this->load->view("template/footer");
 	}
 
 	public function run_import()
@@ -65,7 +56,7 @@ class Import extends CI_Controller {
 					}
 					else $miasto = $m[1];
 					
-					Import::proceed_xml($this->path_dir,$this->excel_file, $miasto);
+					Import_interwencje::parse_xml($this->path_dir,$this->excel_file, $miasto);
 				}
 				//Insert into imported file
 				if ($this->excel_file != "." && $this->excel_file != "..") {
@@ -73,7 +64,7 @@ class Import extends CI_Controller {
 					$check_exist = $result->num_rows();
 					if($check_exist == 0)
 					{
-						$this->db->query("INSERT INTO imported_files (id, filename, miasto, import_date) VALUES (NULL, '$this->excel_file', '$miasto', NOW())");
+						$this->db->query("INSERT INTO imported_files (id, filename, miasto, import_date, filetype) VALUES (NULL, '$this->excel_file', '$miasto', NOW(), 'interwencje')");
 					}
 				}
 			}
@@ -81,7 +72,7 @@ class Import extends CI_Controller {
 		}	
 	}
 
-	public function proceed_xml($path_dir,$excel_file,$miasto)
+	public function parse_xml($path_dir,$excel_file,$miasto)
 	{		
 		if ( $excel_file ){
 			$dom = new DOMDocument();
@@ -108,7 +99,7 @@ class Import extends CI_Controller {
 	
 						$index += 1;
 					}
-					Import::add_interwencje($nra, $data, $serwisant, $usterka, $miasto, $excel_file);
+					Import_interwencje::add_interwencje($nra, $data, $serwisant, $usterka, $miasto, $excel_file);
 				}
 				$first_row = false;
 			}
@@ -120,11 +111,11 @@ class Import extends CI_Controller {
 	public function add_interwencje($nra, $data, $serwisant, $usterka, $miasto, $excel_file)
 	{
 		$dane= array(
-		'nra' => $nra,
-		'data' => $data,
-		'serwisant' => $serwisant,
-		'usterka' => $usterka,
-		'miasto' => $miasto
+			'nra' => $nra,
+			'data' => $data,
+			'serwisant' => $serwisant,
+			'usterka' => $usterka,
+			'miasto' => $miasto
 		);
 	
 		$nra_val = intval($dane['nra']);
@@ -140,7 +131,8 @@ class Import extends CI_Controller {
 
 	public function import_result_details()
 	{
-		$query = $this->db->query("SELECT filename,miasto FROM imported_files WHERE number_of_records='0'");
+		$this->db->cache_off();
+		$query = $this->db->query("SELECT filename,miasto FROM imported_files WHERE number_of_records='0' AND filetype='interwencje'");
 		$check_exist = $query->num_rows();
 		if($check_exist > 0)
 		{
@@ -153,7 +145,7 @@ class Import extends CI_Controller {
 				$mob = substr($miasto,-3);
 				if($mob == 'mob')
 				{
-					$data = substr($d[2],0,-4);
+					$data = substr($d[2],0,-7);
 				}else{
 					$data = substr($d[2],0,-4);
 				}
@@ -173,7 +165,8 @@ class Import extends CI_Controller {
 			$data_od = date("Y-m-d");
 			$data_do = date("Y-m-d");
 		}
-		$details = $this->db->query("SELECT filename,number_of_records,import_date FROM imported_files WHERE date(import_date) BETWEEN '$data_od' AND '$data_do'");
+		
+		$details = $this->db->query("SELECT filename,number_of_records,import_date FROM imported_files WHERE date(import_date) BETWEEN '$data_od' AND '$data_do' AND filetype='interwencje'");
 		$check_exist = $details->num_rows();
 		if($check_exist > 0)
 		{

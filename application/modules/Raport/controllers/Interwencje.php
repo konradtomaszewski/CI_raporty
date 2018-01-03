@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Raport extends CI_Controller {
+class Interwencje extends MX_Controller {
 
 	public function __construct()
 	{
@@ -13,14 +13,14 @@ class Raport extends CI_Controller {
 
 	public function index()
 	{
-		echo "Tutaj wyświetli się lista raportów";
+		echo "Lista raportów";
 	}
 
 	public function ilosciowy()
 	{
-		$data['title'] = 'Raport ilościowy live';
+		$data['title'] = 'Raport ilosciowy';
 		$this->load->view("template/header", $data);
-		$this->load->view("ilosciowy_view", $data);
+		$this->load->view("interwencje_ilosciowy", $data);
 		$this->load->view("template/footer");
 	}
 

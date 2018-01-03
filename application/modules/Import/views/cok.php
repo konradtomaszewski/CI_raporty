@@ -2,6 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	imported_files();
+
     if(screen.height>768){
         $('div#sidebar').css("position", "fixed");
         $('div#sidebar').css("margin-right","2%");
@@ -10,7 +11,7 @@ $(document).ready(function() {
     $('button#run_import').click(function(){
         jQuery.ajax({
                     type: "GET",
-                    url: "<?php echo base_url();?>import/run_import",
+                    url: "<?php echo base_url();?>import/cok/run_import",
                     success: function(res) {
                         console.log('Zakończono import danych');
                     }
@@ -23,7 +24,7 @@ $(document).ready(function() {
 
         jQuery.ajax({
                     type: "POST",
-                    url: "<?php echo base_url();?>import/import_result_details",
+                    url: "<?php echo base_url();?>import/cok/import_result_details",
                     data: {
                         data_od: data_od,
                         data_do: data_do
@@ -56,7 +57,7 @@ $(document).ready(function() {
                         </div>
                         <div class="mdl-card__supporting-text">
                             <div>
-                            Naciśnięcie przycisku spowoduje uruchomienie procesu odpwoedzialnego za import danych z katalogu files/xml do bazy danych
+                            Naciśnięcie przycisku spowoduje uruchomienie procesu odpwoedzialnego za import danych do bazy danych
                             </div>
                         </div>
                         <div class="mdl-card__actions">
@@ -72,18 +73,18 @@ $(document).ready(function() {
                         </div>
                         <div class="mdl-card__supporting-text">
                             <p>Dane zostaną automatycznie załadowane po wprowadzeniu zakresu dat</p>
-                            <div class="mdl-grid"><table>
-                                <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" id="data_od" value="<?php echo date("Y-m-d")?>"/>
-                                    <label class="mdl-textfield__label" for="data_od">Data początkowa</label>
-                                </div></td>
-                                <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" id="data_do" value="<?php echo date("Y-m-d")?>"/>
-                                    <label class="mdl-textfield__label" for="data_do">Data końcowa</label>
-                                </div></td>
-                                <!--<input type="text" id="data_od" placeholder="od"/>
-                                <input type="text" id="data_do" placeholder="do"/>-->
-                            </table></div>
+                            <div class="mdl-grid">
+                                <table>
+                                    <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class="mdl-textfield__input" type="text" id="data_od" value="<?php echo date("Y-m-d")?>"/>
+                                        <label class="mdl-textfield__label" for="data_od">Data początkowa</label>
+                                    </div></td>
+                                    <td><div class="mdl-cell mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class="mdl-textfield__input" type="text" id="data_do" value="<?php echo date("Y-m-d")?>"/>
+                                        <label class="mdl-textfield__label" for="data_do">Data końcowa</label>
+                                    </div></td>
+                                </table>
+                            </div>
                         </div>
                         <div style="background:#575757">
                             <div class="mdl-card__supporting-text" style="color:#fff; text-align:center">Automatyczne odświeżanie danych...</div>
@@ -94,4 +95,3 @@ $(document).ready(function() {
         </div>
     </div>
 </main>
-
