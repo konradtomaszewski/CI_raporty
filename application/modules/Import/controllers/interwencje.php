@@ -100,14 +100,15 @@ class Interwencje extends MX_Controller {
 						$ind = $cell->getAttribute( 'ss:Index' );
 						if ( $ind != null ) $index = $ind;
 	
-						if ( $index == 2 ) $nra = $cell->nodeValue;
+						if ( $index == 2 ) $nra = trim($cell->nodeValue);
 						if ( $index == 4 ) $data = $cell->nodeValue;
-						if ( $index == 5 ) $serwisant = $cell->nodeValue;
-						if ( $index == 12) $usterka = $cell->nodeValue;
+						if ( $index == 5 ) $serwisant = trim($cell->nodeValue);
+						if ( $index == 12) $usterka = trim($cell->nodeValue);
+						if ( $index == 13) $rodzaj_usterki = trim($cell->nodeValue);
 	
 						$index += 1;
 					}
-					Interwencje::add_interwencje($nra, $data, $serwisant, $usterka, $miasto, $excel_file);
+					Interwencje::add_interwencje($nra, $data, $serwisant, $rodzaj_usterki, $usterka, $miasto, $excel_file);
 				}
 				$first_row = false;
 			}
@@ -116,23 +117,25 @@ class Interwencje extends MX_Controller {
 		}
 	}
 
-	public function add_interwencje($nra, $data, $serwisant, $usterka, $miasto, $excel_file)
+	public function add_interwencje($nra, $data, $serwisant, $rodzaj_usterki, $usterka, $miasto, $excel_file)
 	{
 		$dane= array(
 			'nra' => $nra,
 			'data' => $data,
 			'serwisant' => $serwisant,
 			'usterka' => $usterka,
+			'rodzaj_usterki' => $rodzaj_usterki,
 			'miasto' => $miasto
 		);
 	
-		$nra_val = intval($dane['nra']);
-		if($nra_val>0){
-			$result = $this->db->query("SELECT * FROM interwencje WHERE nra='$nra_val' AND data='$data' AND serwisant='$serwisant' AND usterka='$usterka' AND miasto='$miasto'");
+		if($nra>0){
+			$result = $this->db->query("SELECT * FROM interwencje WHERE nra='$nra' AND data='$data' AND serwisant='$serwisant' AND usterka='$usterka'  AND rodzaj_usterki='$rodzaj_usterki' AND miasto='$miasto'");
+
 			$check_exist = $result->num_rows();
 			if($check_exist == 0)
 			{
-				$this->db->query("INSERT INTO interwencje (id, nra, data, serwisant, usterka, miasto) VALUES (NULL, '$nra_val', '$data', '$serwisant', '$usterka', '$miasto');");
+				$this->db->insert('interwencje', $dane);
+				//$this->db->query("INSERT INTO interwencje (id, nra, data, serwisant, usterka, rodzaj_usterki,miasto) VALUES (NULL, '$nra_val', '$data', '$serwisant', '$usterka', '$rodzaj_usterki', '$miasto');");
 			}
 		}
 	}

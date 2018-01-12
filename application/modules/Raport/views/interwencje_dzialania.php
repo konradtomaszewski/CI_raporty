@@ -52,7 +52,7 @@
 			var derivers = $.pivotUtilities.derivers;
        		var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.plotly_renderers);
 			
-			$.getJSON("<?php echo base_url();?>raport/interwencje/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
+			$.getJSON("<?php echo base_url();?>raport/interwencje/dzialania_serwisowe_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
 				$("#output").pivotUI(mps, {
 					renderers: renderers,
 					cols: ["data"], 
@@ -85,12 +85,14 @@
 			<div class="mdl-cell mdl-cell--9-col-desktop mdl-cell--9-col-tablet mdl-cell--4-col-phone">
 					<div class="mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text">Dynamiczny Raport ilościowy</h2>
+                            <h2 class="mdl-card__title-text">Raport ilościowy z podjętych działań serwisowych</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
 							<div id="output" style="overflow-x:auto; overflow-y:hidden; background:#; height:auto; min-height: 410px;">
 								<p style="text-align:center; font-size:14pt">Wprowadź datę początkową i końcową, następnie kliknij przycisk "Pobierz dane" aby móc operować na rekordach</p>
 							</div>
+							<span><b>* Raport prezentuje wszystkie podjęte działania przeprowadzone na automatach sprzedaży biletów. <br />
+							* Nie jest to raport ilościowy przeprowadzonych interwencji, ponieważ na każdą interwencję może zostać utworzonych kilka działań serwisowych.</b></span>
                         </div>
 						<div class="mdl-card__actions">
 							<p>&nbsp;</p>
@@ -120,7 +122,7 @@
 							</div>
                         </div>
 						<div class="mdl-card__actions">
-							<button id="export" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue">Exportuj</button>
+							<!--<button id="export" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue">Exportuj ilość.</button>-->
 							<button id="run_ilosciowy" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored-blue" style="float:right">Pobierz dane</button>
 						</div>
                     </div>

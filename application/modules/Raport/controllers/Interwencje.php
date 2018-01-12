@@ -16,26 +16,29 @@ class Interwencje extends MX_Controller {
 		echo "Lista raportów";
 	}
 
-	public function ilosciowy()
+	public function dzialania_serwisowe()
 	{
-		$data['title'] = 'Raport ilosciowy';
+		$data['title'] = 'Raport podjętch działań';
 		$this->load->view("template/header", $data);
-		$this->load->view("interwencje_ilosciowy", $data);
+		$this->load->view("interwencje_dzialania", $data);
 		$this->load->view("template/footer");
 	}
 
-	public function ilosciowy_json()
+	public function dzialania_serwisowe_json()
 	{
 		if(isset($_GET['data_od']) && isset($_GET['data_do'])){
 			$data_od = $_GET['data_od'];
 			$data_do = $_GET['data_do'];
 		}else{
-			$data_od = date("Y-m-d", strtotime("- day"));
+			$data_od = date("Y-m-d", strtotime("-1 day"));
 			$data_do = date("Y-m-d");
 		}
-		$this->db->cache_on();
-		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
-		
+		$this->db->cache_off();
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		/*$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
+									FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
+									GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(data)/900)*900), nra, serwisant");*/
+									
 		$raport = array();
 		foreach($query->result() as $row)
 		{
@@ -48,6 +51,7 @@ class Interwencje extends MX_Controller {
 					$temp['miasto'] = 'Warszawa';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['emtest'] = '1';
 					$temp['automat'] = 'EMTest';
 					$raport[] = $temp;
@@ -58,6 +62,7 @@ class Interwencje extends MX_Controller {
 					$temp['miasto'] = 'Warszawa';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['sb'] = '1';
 					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
@@ -65,25 +70,27 @@ class Interwencje extends MX_Controller {
 			}
 			elseif($row->miasto == "WrKM")
 			{
-				if($row->nra < 610)
-				{
+				//if($row->nra < 610)
+				//{
 					$temp['data'] = $row->data;
 					$temp['miasto'] = 'Wrocław';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['sb'] = '1';
 					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
-				}
+				/*}
 				else{
 					$temp['data'] = $row->data;
 					$temp['miasto'] = 'Wrocław';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['mera'] = '1';
 					$temp['automat'] = 'Mera';
 					$raport[] = $temp;
-				}	
+				}*/	
 			}
 			elseif($row->miasto == "WrKMmob")
 			{
@@ -91,6 +98,7 @@ class Interwencje extends MX_Controller {
 					$temp['miasto'] = 'Wrocław';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['mobilne'] = '1';
 					$temp['automat'] = 'Mobilne';
 					$raport[] = $temp;
@@ -101,6 +109,7 @@ class Interwencje extends MX_Controller {
 					$temp['miasto'] = 'Bydgoszcz';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['sb'] = '1';
 					$temp['automat'] = 'S&B';
 					$raport[] = $temp;
@@ -111,6 +120,7 @@ class Interwencje extends MX_Controller {
 					$temp['miasto'] = 'Gdańsk';
 					$temp['serwisant'] = $row->serwisant;
 					$temp['usterka'] = $row->usterka;
+					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['emtest'] = '1';
 					$temp['automat'] = 'EMTest';
 					$raport[] = $temp;
@@ -128,7 +138,11 @@ class Interwencje extends MX_Controller {
 			$data_od = date("Y-m-d", strtotime("-1 day"));
 			$data_do = date("Y-m-d");
 		}
-		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		$this->db->cache_off();
+		//$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
+									FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
+									GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(data)/900)*900), nra, serwisant");
 		
 		$raport = array();
 		foreach($query->result() as $row)
