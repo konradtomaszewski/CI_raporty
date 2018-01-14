@@ -34,7 +34,7 @@ class Interwencje extends MX_Controller {
 			$data_do = date("Y-m-d");
 		}
 		$this->db->cache_off();
-		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' GROUP BY data,nra,serwisant,usterka");
 		/*$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
 									FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
 									GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(data)/900)*900), nra, serwisant");*/

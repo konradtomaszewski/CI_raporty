@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Interwencje extends MX_Controller {
-	public $path_dir = './files/interwencje/';
+	public $path_dir = './imported_files/interwencje/';
 	public $excel_file = null;
 
 	public function __construct()

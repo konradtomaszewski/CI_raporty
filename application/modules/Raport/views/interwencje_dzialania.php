@@ -41,6 +41,9 @@
 		background:#444;
 		border: 1px solid #666 !important;
 	}
+	.axis_5, .axis_7, .axis_8{
+		display: none !important;
+	}
 </style>
 <script>
     $(function(){

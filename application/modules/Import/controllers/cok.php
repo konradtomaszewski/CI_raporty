@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin:*');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cok extends MX_Controller {
-	public $path_dir = './files/cok/';
+	public $path_dir = './imported_files/cok/';
 	public $excel_file = null;
 
 	public function __construct()
