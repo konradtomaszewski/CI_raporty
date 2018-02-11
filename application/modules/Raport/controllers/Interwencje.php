@@ -34,7 +34,12 @@ class Interwencje extends MX_Controller {
 			$data_do = date("Y-m-d");
 		}
 		$this->db->cache_off();
-		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' GROUP BY data,nra,serwisant,usterka");
+		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
+									FROM interwencje
+									WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
+									AND usterka NOT LIKE 'Brak możliwości'
+									AND usterka NOT LIKE 'Prace konserw.'
+									GROUP BY data,nra,serwisant,usterka");
 		/*$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
 									FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
 									GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(data)/900)*900), nra, serwisant");*/
@@ -78,7 +83,7 @@ class Interwencje extends MX_Controller {
 					$temp['usterka'] = $row->usterka;
 					$temp['rodzaj_usterki'] = $row->rodzaj_usterki;
 					$temp['sb'] = '1';
-					$temp['automat'] = 'S&B';
+					$temp['automat'] = 'EmTest';
 					$raport[] = $temp;
 				/*}
 				else{
@@ -141,7 +146,10 @@ class Interwencje extends MX_Controller {
 		$this->db->cache_off();
 		//$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, nra FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do'");
 		$query = $this->db->query("SELECT date(data) as 'data', miasto, serwisant, usterka, rodzaj_usterki, nra 
-									FROM interwencje WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
+									FROM interwencje 
+									WHERE date(data) BETWEEN '$data_od' AND '$data_do' 
+									AND usterka NOT LIKE 'Brak możliwości'
+									AND usterka NOT LIKE 'Prace konserw.'
 									GROUP BY FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(data)/900)*900), nra, serwisant");
 		
 		$raport = array();

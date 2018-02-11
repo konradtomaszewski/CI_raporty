@@ -213,7 +213,7 @@
 
             <div class="avatar-dropdown" id="icon">
                 <span>ASDDSA</span>
-                <img src="images/Icon_header.png">
+                <!--<img src="images/Icon_header.png">-->
             </div>
             <!-- Account dropdawn-->
             <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp account-dropdown"

@@ -52,7 +52,7 @@
 			var derivers = $.pivotUtilities.derivers;
        		var renderers = $.extend($.pivotUtilities.renderers,$.pivotUtilities.plotly_renderers);
 			
-			$.getJSON("<?php echo base_url();?>raport/cok/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
+			$.getJSON("<?php echo base_url();?>Raport/Cok/ilosciowy_json?data_od="+data_od+"&data_do="+data_do, function(mps) {
 				var functionsConfig = {
 					aggregators: $.pivotUtilities.aggregators,
 					renderers:   $.pivotUtilities.renderers,
